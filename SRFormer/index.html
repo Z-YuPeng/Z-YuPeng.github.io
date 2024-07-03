@@ -1,1 +1,264 @@
-# SRFormer
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://shangchenzhou.com/projects/CodeFormer/#citation -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">
+.anticon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
+
+.anticon .anticon-icon {
+  display: block;
+}
+
+.anticon[tabindex] {
+  cursor: pointer;
+}
+
+.anticon-spin::before,
+.anticon-spin {
+  display: inline-block;
+  -webkit-animation: loadingCircle 1s infinite linear;
+  animation: loadingCircle 1s infinite linear;
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>SRFormer</title>
+  
+  <link rel="stylesheet" href="./SRFormer_files/project.css">
+  <link rel="stylesheet" href="./SRFormer_files/bootstrap.min.css">
+  <link rel="stylesheet" href="./SRFormer_files/jquery.imgcmp-1.0.0.css">
+  <link rel="stylesheet" href="./SRFormer_files/jquery.imgctl-1.0.0.css">
+  <script type="text/javascript" src="./SRFormer_files/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./SRFormer_files/jquery-1.12.4.min.js"></script></head>
+<body data-new-gr-c-s-check-loaded="14.1185.0" data-gr-ext-installed="" class="vsc-initialized" data-new-gr-c-s-loaded="14.1185.0">
+  <div id="content">
+    <div class="head">
+      <h1>   
+        <font color="Tomato">SRFormerV2</font>: Taking a Closer Look at Permuted
+        Self-Attention for Image Super-Resolution
+      </h1>
+      <!--=================Authors==========================-->
+      <div class="authors">
+        Yupeng Zhou</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Zhen Li</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Chun-Le Guo</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Li Liu</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Ming-Ming Cheng</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Qibin Hou</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+
+      <!--=================Tabs==========================-->
+      <ul id="tabs">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#citation">Citation</a></li>
+    </ul>
+    </div> <!-- .head -->
+
+    
+    <!--=================Materials==========================-->
+    <div class="section">
+      <h2>Materials</h2>
+      <div class="row text-center">
+        <div class="col-md-2">
+          <a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Zhou_SRFormer_Permuted_Self-Attention_for_Single_Image_Super-Resolution_ICCV_2023_paper.pdf" >
+            Paper (ICCV)
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://github.com/HVision-NKU/SRFormer" target="_blank">
+            Codes (GitHub)
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://drive.google.com/drive/folders/1D5ER_HwYJoyZCcrKVstwE-iEl0hXulwd?usp=sharing" target="_blank">
+            Pretrained Model
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://drive.google.com/drive/folders/1t_yvM5jRJn-YTz-po5tGj3xITItLbeCl?usp=sharing" target="_blank">
+            Visual Results
+          </a>
+        </div>
+      </div>
+    </div> <!-- .section -->
+
+    <!--=================Abstract==========================-->
+    <div id="abstract" class="section">
+      <h2>Abstract</h2>
+      <br>
+      <img src="./SRFormer_files/teaser.png"  width = "45%"  align="right" hspace="15" vspace="15" > 
+      <h5>Abstract—Previous works have shown that increasing the window size for Transformer-based image super-resolution models (e.g.,
+        SwinIR) can significantly improve the model performance. Still, the computation overhead is also considerable when the window size
+        gradually increases. In this paper, we present SRFormer, a simple but novel method that can enjoy the benefit of large window
+        self-attention but introduces even less computational burden. The core of our SRFormer is the permuted self-attention (PSA), which
+        strikes an appropriate balance between the channel and spatial information for self-attention. Without any bells and whistles, we show that our SRFormer achieves a 33.86dB PSNR score on the Urban100 dataset, which is 0.46dB higher than that of SwinIR but uses
+        fewer parameters and computations. In addition, we also attempt to scale up the model by further enlarging the window size and
+        channel numbers to explore the potential of Transformer-based models. Experiments show that our scaled model, named
+        SRFormerV2, can further improve the results and achieves state-of-the-art. We hope our simple and effective approach could be useful
+        for future research in super-resolution model design. </h5>         
+    </div> <!-- .section -->
+
+    <!--=================Method==========================-->
+    <div id="method" class="section">
+      <h2>Method</h2>
+      <br>
+       <img src="./SRFormer_files/psa.png"  width = "99%" > 
+      <p> 
+      </p>
+     
+  
+    </div> <!-- .section -->
+    
+    <!--=================Results==========================-->
+    <div id="results" class="section">
+      <h2>Results</h2>
+      
+      <p>We provide the results on classical image SR, lightweight image SR, realworld image SR. More results can be found in the <a href="#">paper</a>. The visual results of SRFormer can be found in <a href="https://drive.google.com/drive/folders/1t_yvM5jRJn-YTz-po5tGj3xITItLbeCl?usp=sharing" target="_blank">[Visual Results]</a>.</p>
+    
+      <h3>Classical image SR</h3>
+      
+      <p align="center">
+        <img width="900" src="./SRFormer_files/classicalSR_1.png" alt="Classical SR Table 4 Results">
+      </p>
+    
+      <p align="center">
+        <img width="900" src="./SRFormer_files/classicalSR_2.png" alt="Classical SR Figure 4 Results">
+      </p>
+    
+      <h3>Lightweight image SR</h3>
+      
+      <p align="center">
+        <img width="900" src="./SRFormer_files/lightweightSR_2.png" alt="Lightweight SR Table 5 Results">
+      </p>
+    
+
+      <p align="center">
+        <img width="900" src="./SRFormer_files/lightweightSR_1.png" alt="Lightweight SR Figure 5 Results">
+      </p>
+    
+      <h3>Model size comparison</h3>
+      
+      <p align="center">
+        <img width="500" src="./SRFormer_files/model_size.png" alt="Model Size Comparison">
+      </p>
+    
+      <h3>Realworld image SR</h3>
+      
+      <p align="center">
+        <img width="900" src="./SRFormer_files/realworld.png" alt="Realworld SR Figure 8 Results">
+      </p>
+    </div> <!-- .section -->
+     
+
+    
+<div id="citation" class="section">
+  <h2>Citation</h2>
+  <pre>
+    @inproceedings{zhou2023srformer,
+      title={Srformer: Permuted self-attention for single image super-resolution},
+      author={Zhou, Yupeng and Li, Zhen and Guo, Chun-Le and Bai, Song and Cheng, Ming-Ming and Hou, Qibin},
+      booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+      pages={12780--12791},
+      year={2023}
+    }
+  </pre>
+</div> <!-- .section -->
+<div id="citation" class="section">
+ The website is borrowed from <a href="https://shangchenzhou.com/projects/CodeFormer/">Codeformer </a>.
+</div> <!-- .section -->
+
+    <style>
+      a#clustrmaps-widget-v2, #clustrmaps-widget-v2 {
+        min-height: 100px !important;
+      }
+    </style>
+
+
+  </div> <!-- #content -->
+  <script type="text/javascript" src="./SRFormer_files/jquery.event.move-2.0.0.min.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/jquery.imgcmp-1.0.0.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/jquery.imgctl-1.0.0.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/canvas-nest-1.0.1.min.js"></script><canvas id="c_n7" width="1728" height="959" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"></canvas>
+  <script type="text/javascript">
+    window.onload = function() {
+      $(".imgcmp-container").imgcmp({
+        default_offset_pct: 0.5,
+        before_label: 'Real Input',
+        after_label: 'CodeFormer'
+      });
+      $(".imgctl-container").imgctl({
+          "min": 0,
+          "max": 59,
+          "step": 1,
+          "val": 0,
+          "loadingTop": "35%",
+          "loadingLeft": "35%",
+      });
+    }
+  </script>
+
+<deepl-input-controller><template shadowrootmode="open"><link rel="stylesheet" href="chrome-extension://cofdbpoegempjloogbagkncekinflcnj/build/content.css"><div dir="ltr"><div class="dl-input-translation-container svelte-95aucy"><div></div></div></div></template></deepl-input-controller><div id="forest-ext-shadow-host"><template shadowrootmode="open"><head></head><div id="root"></div></template></div><div id="aiknowledge_pdf_auto_upload" style="position: fixed; top: 8px; right: 8px; z-index: 9999; background-color: white;"><template shadowrootmode="open"><link rel="stylesheet" href="chrome-extension://nchidjaafkcjdgdbbdpkpokodiehhcdg/content-script/style.css"><div data-v-app=""><main class="content-script-container" data-v-f5c2522d="" style="display: none;"><div class="banner neutral-10-b" data-v-f5c2522d=""><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODUiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCA4NSAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0wIDEwLjEzODJMMy44Mzk3MiAzLjkzMzRDNC42MzIwMyAyLjY1Mjg2IDYuMDIxNzggMS44NzUgNy41MTY4NiAxLjg3NUMxMC45MjI4IDEuODc1IDEyLjk5OTEgNS42NTg2MyAxMS4xOTQgOC41NzU1N0wxMC4zNTcyIDkuOTI3NzVMMTUuMjAxIDE4LjQwMUgxMi43NTg4TDkuMDg3NyAxMS45NzkyTDYuNDMwMTQgMTYuMjczNUgxMC4zNDU2TDExLjQzNCAxOC40MDEzSDUuMTEzODJWMTguNDAwNkw1LjExMzQyIDE4LjQwMTJMMCAxMC4xMzgyWk03Ljg5NjU0IDkuODkwMDdINy44OTM0NEw3Ljg5NDkzIDkuODkyNjdMNS4xMTM4OSAxNC4zODY1TDIuNDg0ODUgMTAuMTM4MUw1LjYyNjcgNS4wNjEwMkM2LjAzNjgyIDQuMzk4MjMgNi43NDM2MyA0LjAwMjY1IDcuNTE3MzMgNC4wMDI2NUM4LjcwMjczIDQuMDAyNjUgOS4yNzU5NCA0LjgxNDAyIDkuNDY3MyA1LjE2Mjc5QzkuNjU4ODQgNS41MTE3NCAxMC4wMzYxIDYuNDMyNjkgOS40MDc5NiA3LjQ0NzhMNy44OTY1NCA5Ljg5MDA3WiIgZmlsbD0iIzFGNzFFMCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIwLjA5NDMgNS40MzI1QzIxLjQ3NDYgNS40MzI1IDIyLjUyODIgNS42ODgwNyAyMy4yNTUxIDYuMTk5MjFDMjMuOTkxMyA2LjcxMDM1IDI0LjM1OTMgNy40OTEgMjQuMzU5MyA4LjU0MTE2QzI0LjM1OTMgOS44NTE1MyAyMy43MTk4IDEwLjczOTEgMjIuNDQwOCAxMS4yMDM3QzIyLjYxNTYgMTEuNDE3NSAyMi44MTM0IDExLjY3NzcgMjMuMDM0MyAxMS45ODQ0QzIzLjI1NTEgMTIuMjkxMSAyMy40ODA2IDEyLjYyNTYgMjMuNzEwNiAxMi45ODgxQzIzLjk0MDcgMTMuMzQxMiAyNC4xNjE1IDEzLjcwODMgMjQuMzczMiAxNC4wODkzQzI0LjU4NDggMTQuNDYxMSAyNC43NzM0IDE0LjgyODIgMjQuOTM5MSAxNS4xOTA2SDIyLjk5MjlDMjIuODE4MSAxNC44NTYxIDIyLjYyOTQgMTQuNTIxNSAyMi40MjcgMTQuMTg2OUMyMi4yMjQ1IDEzLjg0MzEgMjIuMDE3NSAxMy41MTMyIDIxLjgwNTkgMTMuMTk3MkMyMS42MDM0IDEyLjg3MTkgMjEuNDAxIDEyLjU2OTkgMjEuMTk4NSAxMi4yOTExQzIwLjk5NjEgMTIuMDAzIDIwLjgwNzUgMTEuNzQ3NCAyMC42MzI2IDExLjUyNDRDMjAuNTAzOCAxMS41MzM2IDIwLjM5MzQgMTEuNTM4MyAyMC4zMDE0IDExLjUzODNDMjAuMjA5MyAxMS41MzgzIDIwLjEyMTkgMTEuNTM4MyAyMC4wMzkxIDExLjUzODNIMTkuMTk3MVYxNS4xOTA2SDE3LjQ1OFY1LjY2OTQ4QzE3Ljg4MTMgNS41NzY1NSAxOC4zMzIyIDUuNTE2MTQgMTguODEwNyA1LjQ4ODI2QzE5LjI4OTIgNS40NTEwOSAxOS43MTcgNS40MzI1IDIwLjA5NDMgNS40MzI1Wk0yMC4yMTg1IDYuOTUxOThDMTkuODUwNSA2Ljk1MTk4IDE5LjUxIDYuOTY1OTIgMTkuMTk3MSA2Ljk5MzhWMTAuMTE2NEgxOS45NTYzQzIwLjM3OTYgMTAuMTE2NCAyMC43NTIyIDEwLjA5MzIgMjEuMDc0MyAxMC4wNDY3QzIxLjM5NjQgMTAuMDAwMiAyMS42NjMyIDkuOTE2NTkgMjEuODc0OSA5Ljc5NTc3QzIyLjA5NTcgOS42NzQ5NiAyMi4yNjEzIDkuNTEyMzIgMjIuMzcxOCA5LjMwNzg3QzIyLjQ4MjIgOS4xMDM0MSAyMi41Mzc0IDguODQzMTkgMjIuNTM3NCA4LjUyNzIyQzIyLjUzNzQgOC4yMjk4MyAyMi40ODIyIDcuOTc4OSAyMi4zNzE4IDcuNzc0NDVDMjIuMjYxMyA3LjU2OTk5IDIyLjEwMDMgNy40MDczNiAyMS44ODg3IDcuMjg2NTRDMjEuNjg2MiA3LjE2NTczIDIxLjQ0MjQgNy4wODIwOSAyMS4xNTcxIDcuMDM1NjJDMjAuODcxOSA2Ljk3OTg2IDIwLjU1OSA2Ljk1MTk4IDIwLjIxODUgNi45NTE5OFpNMjUuNjE1NiAxMS41ODAxQzI1LjYxNTYgMTAuOTM4OSAyNS43MDc2IDEwLjM3NjYgMjUuODkxNiA5Ljg5MzM1QzI2LjA4NDggOS40MTAwOSAyNi4zMzc5IDkuMDEwNDggMjYuNjUwOCA4LjY5NDVDMjYuOTYzNiA4LjM2OTIzIDI3LjMyMjUgOC4xMjc2IDI3LjcyNzQgNy45Njk2MUMyOC4xMzIyIDcuODAyMzMgMjguNTQ2MyA3LjcxODY5IDI4Ljk2OTYgNy43MTg2OUMyOS45NjM0IDcuNzE4NjkgMzAuNzM2NCA4LjAzMDAyIDMxLjI4ODUgOC42NTI2OEMzMS44NDk4IDkuMjc1MzQgMzIuMTMwNCAxMC4yMDQ3IDMyLjEzMDQgMTEuNDQwN0MzMi4xMzA0IDExLjUzMzYgMzIuMTI1OCAxMS42NDA1IDMyLjExNjYgMTEuNzYxM0MzMi4xMTY2IDExLjg3MjkgMzIuMTEyIDExLjk3NTEgMzIuMTAyOCAxMi4wNjhIMjcuMzQwOUMyNy4zODY5IDEyLjY1MzUgMjcuNTg5MyAxMy4xMDg5IDI3Ljk0ODIgMTMuNDM0MkMyOC4zMTYzIDEzLjc1MDEgMjguODQ1NCAxMy45MDgxIDI5LjUzNTUgMTMuOTA4MUMyOS45NDA0IDEzLjkwODEgMzAuMzA4NSAxMy44NzA5IDMwLjYzOTcgMTMuNzk2NkMzMC45ODAyIDEzLjcyMjMgMzEuMjQ3MSAxMy42NDMzIDMxLjQ0MDMgMTMuNTU5NkwzMS42NjExIDE0LjkzOTdDMzEuNTY5MSAxNC45ODYyIDMxLjQ0MDMgMTUuMDM3MyAzMS4yNzQ3IDE1LjA5M0MzMS4xMTgyIDE1LjEzOTUgMzAuOTM0MiAxNS4xODEzIDMwLjcyMjYgMTUuMjE4NUMzMC41MjAxIDE1LjI2NSAzMC4yOTkzIDE1LjMwMjEgMzAuMDYgMTUuMzNDMjkuODIwOCAxNS4zNTc5IDI5LjU3NjkgMTUuMzcxOCAyOS4zMjg1IDE1LjM3MThDMjguNjkzNiAxNS4zNzE4IDI4LjE0MTQgMTUuMjc4OSAyNy42NzIyIDE1LjA5M0MyNy4yMDI5IDE0Ljg5NzkgMjYuODE2NCAxNC42MzMgMjYuNTEyNyAxNC4yOTg0QzI2LjIwOTEgMTMuOTU0NiAyNS45ODM2IDEzLjU1NSAyNS44MzY0IDEzLjA5OTZDMjUuNjg5MiAxMi42MzQ5IDI1LjYxNTYgMTIuMTI4NCAyNS42MTU2IDExLjU4MDFaTTMwLjQ2MDMgMTAuODI3M0MzMC40NjAzIDEwLjU5NSAzMC40MjgxIDEwLjM3NjYgMzAuMzYzNyAxMC4xNzIyQzMwLjI5OTMgOS45NTg0MSAzMC4yMDI3IDkuNzc3MTkgMzAuMDczOCA5LjYyODQ5QzI5Ljk1NDIgOS40NzA1IDI5LjgwMjQgOS4zNDk2OSAyOS42MTgzIDkuMjY2MDVDMjkuNDQzNSA5LjE3MzExIDI5LjIzMTkgOS4xMjY2NSAyOC45ODM0IDkuMTI2NjVDMjguNzI1OCA5LjEyNjY1IDI4LjUwMDMgOS4xNzc3NiAyOC4zMDcxIDkuMjc5OTlDMjguMTEzOCA5LjM3MjkyIDI3Ljk0ODIgOS40OTgzOCAyNy44MTAyIDkuNjU2MzdDMjcuNjgxNCA5LjgxNDM2IDI3LjU4MDEgOS45OTU1OCAyNy41MDY1IDEwLjJDMjcuNDMyOSAxMC40MDQ1IDI3LjM4MjMgMTAuNjEzNiAyNy4zNTQ3IDEwLjgyNzNIMzAuNDYwM1pNMzYuMjUyNiAxNC4wMDU3QzM2Ljc2NzkgMTQuMDA1NyAzNy4xNTkgMTMuOTc3OCAzNy40MjU5IDEzLjkyMjFWMTIuMDU0MUMzNy4zMzM4IDEyLjAyNjIgMzcuMjAwNCAxMS45OTgzIDM3LjAyNTYgMTEuOTcwNEMzNi44NTA3IDExLjk0MjYgMzYuNjU3NSAxMS45Mjg2IDM2LjQ0NTkgMTEuOTI4NkMzNi4yNjE4IDExLjkyODYgMzYuMDczMiAxMS45NDI2IDM1Ljg4IDExLjk3MDRDMzUuNjk1OSAxMS45OTgzIDM1LjUyNTcgMTIuMDQ5NCAzNS4zNjkzIDEyLjEyMzhDMzUuMjIyIDEyLjE5ODEgMzUuMTAyNCAxMi4zMDUgMzUuMDEwNCAxMi40NDQ0QzM0LjkxODQgMTIuNTc0NSAzNC44NzI0IDEyLjc0MTggMzQuODcyNCAxMi45NDYzQzM0Ljg3MjQgMTMuMzQ1OSAzNC45OTY2IDEzLjYyNDcgMzUuMjQ1IDEzLjc4MjdDMzUuNDkzNSAxMy45MzE0IDM1LjgyOTMgMTQuMDA1NyAzNi4yNTI2IDE0LjAwNTdaTTM2LjExNDYgNy43MTg2OUMzNi42NjY3IDcuNzE4NjkgMzcuMTMxNCA3Ljc4ODM5IDM3LjUwODcgNy45Mjc3OUMzNy44ODYgOC4wNjcxOSAzOC4xODUgOC4yNjIzNSAzOC40MDU5IDguNTEzMjhDMzguNjM1OSA4Ljc2NDIgMzguNzk2OSA5LjA3MDg4IDM4Ljg4ODkgOS40MzMzM0MzOC45OTAyIDkuNzg2NDggMzkuMDQwOCAxMC4xNzY4IDM5LjA0MDggMTAuNjA0M1YxNS4wMjMzQzM4Ljc4MzEgMTUuMDc5MSAzOC4zOTIxIDE1LjE0NDIgMzcuODY3NSAxNS4yMTg1QzM3LjM1MjIgMTUuMzAyMSAzNi43Njc5IDE1LjM0NCAzNi4xMTQ2IDE1LjM0NEMzNS42ODIxIDE1LjM0NCAzNS4yODY0IDE1LjMwMjEgMzQuOTI3NiAxNS4yMTg1QzM0LjU2ODcgMTUuMTM0OSAzNC4yNjA0IDE1LjAwMDEgMzQuMDAyOCAxNC44MTQyQzMzLjc1NDMgMTQuNjI4NCAzMy41NTY1IDE0LjM4NjcgMzMuNDA5MyAxNC4wODkzQzMzLjI3MTMgMTMuNzkyIDMzLjIwMjIgMTMuNDI0OSAzMy4yMDIyIDEyLjk4ODFDMzMuMjAyMiAxMi41Njk5IDMzLjI4MDUgMTIuMjE2NyAzMy40MzY5IDExLjkyODZDMzMuNjAyNSAxMS42NDA1IDMzLjgyMzQgMTEuNDA4MiAzNC4wOTk0IDExLjIzMTZDMzQuMzc1NSAxMS4wNDU3IDM0LjY5MjkgMTAuOTE1NiAzNS4wNTE4IDEwLjg0MTNDMzUuNDE5OSAxMC43NTc2IDM1LjgwMTcgMTAuNzE1OCAzNi4xOTc0IDEwLjcxNThDMzYuMzgxNSAxMC43MTU4IDM2LjU3NDcgMTAuNzI5OCAzNi43NzcxIDEwLjc1NzZDMzYuOTc5NiAxMC43NzYyIDM3LjE5NTggMTAuODEzNCAzNy40MjU5IDEwLjg2OTJWMTAuNTkwNEMzNy40MjU5IDEwLjM5NTIgMzcuNDAyOSAxMC4yMDkzIDM3LjM1NjggMTAuMDMyOEMzNy4zMTA4IDkuODU2MTggMzcuMjI4IDkuNzAyODQgMzcuMTA4NCA5LjU3MjczQzM2Ljk5OCA5LjQzMzMzIDM2Ljg0NjEgOS4zMjY0NSAzNi42NTI5IDkuMjUyMTFDMzYuNDY4OSA5LjE3Nzc2IDM2LjIzNDIgOS4xNDA1OCAzNS45NDkgOS4xNDA1OEMzNS41NjI1IDkuMTQwNTggMzUuMjA4MiA5LjE2ODQ3IDM0Ljg4NjIgOS4yMjQyM0MzNC41NjQxIDkuMjc5OTkgMzQuMzAxOSA5LjM0NTA0IDM0LjA5OTQgOS40MTkzOUwzMy44OTI0IDguMDUzMjVDMzQuMTA0IDcuOTc4OSAzNC40MTIzIDcuOTA0NTYgMzQuODE3MiA3LjgzMDIxQzM1LjIyMiA3Ljc1NTg2IDM1LjY1NDUgNy43MTg2OSAzNi4xMTQ2IDcuNzE4NjlaTTQyLjIwOTEgMTEuNTI0NEM0Mi4yMDkxIDEyLjI2NzggNDIuMzgzOSAxMi44NTMzIDQyLjczMzYgMTMuMjgwOEM0My4wODMzIDEzLjY5OSA0My41NjY0IDEzLjkwODEgNDQuMTgyOSAxMy45MDgxQzQ0LjQ0OTcgMTMuOTA4MSA0NC42NzUyIDEzLjg5ODggNDQuODU5MiAxMy44ODAyQzQ1LjA1MjQgMTMuODUyNCA0NS4yMDg5IDEzLjgyNDUgNDUuMzI4NSAxMy43OTY2VjkuNjE0NTVDNDUuMTgxMyA5LjUxMjMyIDQ0Ljk4MzQgOS40MTkzOSA0NC43MzUgOS4zMzU3NUM0NC40OTU3IDkuMjQyODEgNDQuMjM4MSA5LjE5NjM1IDQzLjk2MiA5LjE5NjM1QzQzLjM1NDcgOS4xOTYzNSA0Mi45MDg0IDkuNDA1NDUgNDIuNjIzMiA5LjgyMzY1QzQyLjM0NzEgMTAuMjQxOSA0Mi4yMDkxIDEwLjgwODggNDIuMjA5MSAxMS41MjQ0Wk00Ni45OTg2IDE0Ljk2NzZDNDYuNjY3NCAxNS4wNjk4IDQ2LjI0ODcgMTUuMTYyNyA0NS43NDI2IDE1LjI0NjRDNDUuMjQ1NyAxNS4zMyA0NC43MjEyIDE1LjM3MTggNDQuMTY5MSAxNS4zNzE4QzQzLjU5ODYgMTUuMzcxOCA0My4wODc5IDE1LjI4MzYgNDIuNjM3IDE1LjEwN0M0Mi4xODYxIDE0LjkzMDQgNDEuNzk5NiAxNC42Nzk1IDQxLjQ3NzUgMTQuMzU0MkM0MS4xNjQ3IDE0LjAxOTYgNDAuOTIwOCAxMy42MiA0MC43NDYgMTMuMTU1NEM0MC41ODA0IDEyLjY4MTQgNDAuNDk3NiAxMi4xNTE3IDQwLjQ5NzYgMTEuNTY2MkM0MC40OTc2IDEwLjk5IDQwLjU2NjYgMTAuNDY5NSA0MC43MDQ2IDEwLjAwNDlDNDAuODUxOCA5LjUzMDkxIDQxLjA2MzUgOS4xMjY2NSA0MS4zMzk1IDguNzkyMDhDNDEuNjE1NiA4LjQ1NzUyIDQxLjk1MTQgOC4yMDE5NSA0Mi4zNDcxIDguMDI1MzdDNDIuNzQyOCA3LjgzOTUgNDMuMTk4MyA3Ljc0NjU3IDQzLjcxMzYgNy43NDY1N0M0NC4wNjMyIDcuNzQ2NTcgNDQuMzcxNSA3Ljc4ODM5IDQ0LjYzODQgNy44NzIwM0M0NC45MDUyIDcuOTU1NjcgNDUuMTM1MyA4LjA0ODYgNDUuMzI4NSA4LjE1MDgzTDQ1LjMzMTggNC4zOTIwOUw0Ni45OTg2IDQuMzczMDVWMTQuOTY3NlpNNTEuNzIwMSA1LjQzMjVDNTMuMTA5NSA1LjQzMjUgNTQuMTcyMyA1LjY4ODA3IDU0LjkwODUgNi4xOTkyMUM1NS42NTM4IDYuNzEwMzUgNTYuMDI2NSA3LjUwOTU5IDU2LjAyNjUgOC41OTY5MkM1Ni4wMjY1IDkuMTYzODIgNTUuOTI1MyA5LjY1MTcyIDU1LjcyMjggMTAuMDYwNkM1NS41Mjk2IDEwLjQ2MDMgNTUuMjQ0MyAxMC43OTAyIDU0Ljg2NzEgMTEuMDUwNEM1NC40ODk4IDExLjMwMTMgNTQuMDI5NyAxMS40ODcyIDUzLjQ4NjggMTEuNjA4QzUyLjk0MzkgMTEuNzI4OCA1Mi4zMjI4IDExLjc4OTIgNTEuNjIzNCAxMS43ODkySDUwLjc1MzlWMTUuMTkwNkg0OS4wMTQ3VjUuNjY5NDhDNDkuNDE5NiA1LjU3NjU1IDQ5Ljg2NTkgNS41MTYxNCA1MC4zNTM2IDUuNDg4MjZDNTAuODUwNSA1LjQ1MTA5IDUxLjMwNiA1LjQzMjUgNTEuNzIwMSA1LjQzMjVaTTUxLjg0NDMgNi45NTE5OEM1MS40MDI2IDYuOTUxOTggNTEuMDM5MSA2Ljk2NTkyIDUwLjc1MzkgNi45OTM4VjEwLjI4MzdINTEuNTk1OEM1Mi40MzMyIDEwLjI4MzcgNTMuMDc3MyAxMC4xNjc1IDUzLjUyODIgOS45MzUxN0M1My45NzkxIDkuNjkzNTUgNTQuMjA0NSA5LjI0MjgxIDU0LjIwNDUgOC41ODI5OEM1NC4yMDQ1IDguMjY3IDU0LjE0NDcgOC4wMDIxNCA1NC4wMjUxIDcuNzg4MzlDNTMuOTA1NSA3LjU3NDY0IDUzLjczOTggNy40MDczNiA1My41MjgyIDcuMjg2NTRDNTMuMzE2NiA3LjE2NTczIDUzLjA2MzUgNy4wODIwOSA1Mi43NjkxIDcuMDM1NjJDNTIuNDgzOCA2Ljk3OTg2IDUyLjE3NTUgNi45NTE5OCA1MS44NDQzIDYuOTUxOThaTTU5LjY1NCAxNC4wMDU3QzYwLjE2OTMgMTQuMDA1NyA2MC41NjAzIDEzLjk3NzggNjAuODI3MiAxMy45MjIxVjEyLjA1NDFDNjAuNzM1MiAxMi4wMjYyIDYwLjYwMTcgMTEuOTk4MyA2MC40MjY5IDExLjk3MDRDNjAuMjUyMSAxMS45NDI2IDYwLjA1ODggMTEuOTI4NiA1OS44NDcyIDExLjkyODZDNTkuNjYzMiAxMS45Mjg2IDU5LjQ3NDUgMTEuOTQyNiA1OS4yODEzIDExLjk3MDRDNTkuMDk3MyAxMS45OTgzIDU4LjkyNyAxMi4wNDk0IDU4Ljc3MDYgMTIuMTIzOEM1OC42MjM0IDEyLjE5ODEgNTguNTAzNyAxMi4zMDUgNTguNDExNyAxMi40NDQ0QzU4LjMxOTcgMTIuNTc0NSA1OC4yNzM3IDEyLjc0MTggNTguMjczNyAxMi45NDYzQzU4LjI3MzcgMTMuMzQ1OSA1OC4zOTc5IDEzLjYyNDcgNTguNjQ2NCAxMy43ODI3QzU4Ljg5NDggMTMuOTMxNCA1OS4yMzA3IDE0LjAwNTcgNTkuNjU0IDE0LjAwNTdaTTU5LjUxNTkgNy43MTg2OUM2MC4wNjggNy43MTg2OSA2MC41MzI3IDcuNzg4MzkgNjAuOTEgNy45Mjc3OUM2MS4yODczIDguMDY3MTkgNjEuNTg2MyA4LjI2MjM1IDYxLjgwNzIgOC41MTMyOEM2Mi4wMzcyIDguNzY0MiA2Mi4xOTgzIDkuMDcwODggNjIuMjkwMyA5LjQzMzMzQzYyLjM5MTUgOS43ODY0OCA2Mi40NDIxIDEwLjE3NjggNjIuNDQyMSAxMC42MDQzVjE1LjAyMzNDNjIuMTg0NSAxNS4wNzkxIDYxLjc5MzQgMTUuMTQ0MiA2MS4yNjg5IDE1LjIxODVDNjAuNzUzNiAxNS4zMDIxIDYwLjE2OTMgMTUuMzQ0IDU5LjUxNTkgMTUuMzQ0QzU5LjA4MzUgMTUuMzQ0IDU4LjY4NzggMTUuMzAyMSA1OC4zMjg5IDE1LjIxODVDNTcuOTcgMTUuMTM0OSA1Ny42NjE4IDE1LjAwMDEgNTcuNDA0MSAxNC44MTQyQzU3LjE1NTcgMTQuNjI4NCA1Ni45NTc4IDE0LjM4NjcgNTYuODEwNiAxNC4wODkzQzU2LjY3MjYgMTMuNzkyIDU2LjYwMzYgMTMuNDI0OSA1Ni42MDM2IDEyLjk4ODFDNTYuNjAzNiAxMi41Njk5IDU2LjY4MTggMTIuMjE2NyA1Ni44MzgyIDExLjkyODZDNTcuMDAzOCAxMS42NDA1IDU3LjIyNDcgMTEuNDA4MiA1Ny41MDA3IDExLjIzMTZDNTcuNzc2OCAxMS4wNDU3IDU4LjA5NDMgMTAuOTE1NiA1OC40NTMxIDEwLjg0MTNDNTguODIxMiAxMC43NTc2IDU5LjIwMzEgMTAuNzE1OCA1OS41OTg4IDEwLjcxNThDNTkuNzgyOCAxMC43MTU4IDU5Ljk3NiAxMC43Mjk4IDYwLjE3ODUgMTAuNzU3NkM2MC4zODA5IDEwLjc3NjIgNjAuNTk3MSAxMC44MTM0IDYwLjgyNzIgMTAuODY5MlYxMC41OTA0QzYwLjgyNzIgMTAuMzk1MiA2MC44MDQyIDEwLjIwOTMgNjAuNzU4MiAxMC4wMzI4QzYwLjcxMjIgOS44NTYxOCA2MC42Mjk0IDkuNzAyODQgNjAuNTA5NyA5LjU3MjczQzYwLjM5OTMgOS40MzMzMyA2MC4yNDc1IDkuMzI2NDUgNjAuMDU0MiA5LjI1MjExQzU5Ljg3MDIgOS4xNzc3NiA1OS42MzU2IDkuMTQwNTggNTkuMzUwMyA5LjE0MDU4QzU4Ljk2MzggOS4xNDA1OCA1OC42MDk2IDkuMTY4NDcgNTguMjg3NSA5LjIyNDIzQzU3Ljk2NTQgOS4yNzk5OSA1Ny43MDMyIDkuMzQ1MDQgNTcuNTAwNyA5LjQxOTM5TDU3LjI5MzcgOC4wNTMyNUM1Ny41MDUzIDcuOTc4OSA1Ny44MTM2IDcuOTA0NTYgNTguMjE4NSA3LjgzMDIxQzU4LjYyMzQgNy43NTU4NiA1OS4wNTU4IDcuNzE4NjkgNTkuNTE1OSA3LjcxODY5Wk02OS4wODg3IDExLjU4MDFDNjkuMDg4NyAxMC44MjczIDY4LjkxODUgMTAuMjQxOSA2OC41NzggOS44MjM2NUM2OC4yNDY3IDkuNDA1NDUgNjcuNzA4NCA5LjE5NjM1IDY2Ljk2MzEgOS4xOTYzNUM2Ni44MDY2IDkuMTk2MzUgNjYuNjQxIDkuMjA1NjQgNjYuNDY2MiA5LjIyNDIzQzY2LjMwMDYgOS4yMzM1MiA2Ni4xMzQ5IDkuMjYxNCA2NS45NjkzIDkuMzA3ODdWMTMuNDc2QzY2LjExNjUgMTMuNTc4MiA2Ni4zMDk4IDEzLjY3NTggNjYuNTQ5IDEzLjc2ODdDNjYuNzk3NCAxMy44NTI0IDY3LjA1OTcgMTMuODk0MiA2Ny4zMzU4IDEzLjg5NDJDNjcuOTQzMSAxMy44OTQyIDY4LjM4NDggMTMuNjg1MSA2OC42NjA4IDEzLjI2NjlDNjguOTQ2MSAxMi44NDg3IDY5LjA4ODcgMTIuMjg2NCA2OS4wODg3IDExLjU4MDFaTTcwLjgwMDIgMTEuNTUyMkM3MC44MDAyIDEyLjEwOTggNzAuNzI2NiAxMi42MjEgNzAuNTc5NCAxMy4wODU3QzcwLjQ0MTQgMTMuNTUwMyA3MC4yMzg5IDEzLjk0OTkgNjkuOTcyMSAxNC4yODQ1QzY5LjcwNTIgMTQuNjE5MSA2OS4zNjkzIDE0Ljg3OTMgNjguOTY0NSAxNS4wNjUyQzY4LjU2ODggMTUuMjUxIDY4LjExNzkgMTUuMzQ0IDY3LjYxMTggMTUuMzQ0QzY3LjI3MTMgMTUuMzQ0IDY2Ljk1ODUgMTUuMzAyMSA2Ni42NzMyIDE1LjIxODVDNjYuMzg4IDE1LjEzNDkgNjYuMTUzMyAxNS4wNDE5IDY1Ljk2OTMgMTQuOTM5N1YxNy43Njk2SDY0LjI5OTJWOC4xMzY4OUM2NC42Mzk2IDguMDQzOTYgNjUuMDU4MyA3Ljk1NTY3IDY1LjU1NTIgNy44NzIwM0M2Ni4wNTIxIDcuNzg4MzkgNjYuNTc2NiA3Ljc0NjU3IDY3LjEyODcgNy43NDY1N0M2Ny42OTkyIDcuNzQ2NTcgNjguMjA5OSA3LjgzNDg2IDY4LjY2MDggOC4wMTE0M0M2OS4xMTE3IDguMTg4MDEgNjkuNDkzNiA4LjQ0MzU4IDY5LjgwNjQgOC43NzgxNEM3MC4xMjg1IDkuMTAzNDEgNzAuMzcyMyA5LjUwMzAzIDcwLjUzOCA5Ljk3N0M3MC43MTI4IDEwLjQ0MTcgNzAuODAwMiAxMC45NjY3IDcwLjgwMDIgMTEuNTUyMlpNNzEuOTMzIDExLjU4MDFDNzEuOTMzIDEwLjkzODkgNzIuMDI1IDEwLjM3NjYgNzIuMjA5IDkuODkzMzVDNzIuNDAyMyA5LjQxMDA5IDcyLjY1NTMgOS4wMTA0OCA3Mi45NjgyIDguNjk0NUM3My4yODEgOC4zNjkyMyA3My42Mzk5IDguMTI3NiA3NC4wNDQ4IDcuOTY5NjFDNzQuNDQ5NyA3LjgwMjMzIDc0Ljg2MzcgNy43MTg2OSA3NS4yODcgNy43MTg2OUM3Ni4yODA4IDcuNzE4NjkgNzcuMDUzOCA4LjAzMDAyIDc3LjYwNTkgOC42NTI2OEM3OC4xNjcyIDkuMjc1MzQgNzguNDQ3OCAxMC4yMDQ3IDc4LjQ0NzggMTEuNDQwN0M3OC40NDc4IDExLjUzMzYgNzguNDQzMiAxMS42NDA1IDc4LjQzNCAxMS43NjEzQzc4LjQzNCAxMS44NzI5IDc4LjQyOTQgMTEuOTc1MSA3OC40MjAyIDEyLjA2OEg3My42NTgzQzczLjcwNDMgMTIuNjUzNSA3My45MDY4IDEzLjEwODkgNzQuMjY1NiAxMy40MzQyQzc0LjYzMzcgMTMuNzUwMSA3NS4xNjI4IDEzLjkwODEgNzUuODUyOSAxMy45MDgxQzc2LjI1NzggMTMuOTA4MSA3Ni43ODE0IDEzLjg3NjggNzcuMTEyNiAxMy44MDI0Qzc3LjQ1MzEgMTMuNzI4MSA3Ny44NzIxIDEzLjYyMjYgNzguMDY1NCAxMy41Mzg5VjE0Ljg5NTZDNzcuOTczNCAxNC45NDIxIDc3Ljc1NzcgMTUuMDM3MyA3Ny41OTIxIDE1LjA5M0M3Ny40MzU2IDE1LjEzOTUgNzcuMjUxNiAxNS4xODEzIDc3LjA0IDE1LjIxODVDNzYuODM3NSAxNS4yNjUgNzYuNjE2NyAxNS4zMDIxIDc2LjM3NzQgMTUuMzNDNzYuMTM4MiAxNS4zNTc5IDc1Ljg5NDMgMTUuMzcxOCA3NS42NDU5IDE1LjM3MThDNzUuMDExIDE1LjM3MTggNzQuNDU4OSAxNS4yNzg5IDczLjk4OTYgMTUuMDkzQzczLjUyMDMgMTQuODk3OSA3My4xMzM4IDE0LjYzMyA3Mi44MzAxIDE0LjI5ODRDNzIuNTI2NSAxMy45NTQ2IDcyLjMwMSAxMy41NTUgNzIuMTUzOCAxMy4wOTk2QzcyLjAwNjYgMTIuNjM0OSA3MS45MzMgMTIuMTI4NCA3MS45MzMgMTEuNTgwMVpNNzYuNzc3NyAxMC44MjczQzc2Ljc3NzcgMTAuNTk1IDc2Ljc0NTUgMTAuMzc2NiA3Ni42ODExIDEwLjE3MjJDNzYuNjE2NyA5Ljk1ODQxIDc2LjUyMDEgOS43NzcxOSA3Ni4zOTEyIDkuNjI4NDlDNzYuMjcxNiA5LjQ3MDUgNzYuMTE5OCA5LjM0OTY5IDc1LjkzNTcgOS4yNjYwNUM3NS43NjA5IDkuMTczMTEgNzUuNTQ5MyA5LjEyNjY1IDc1LjMwMDggOS4xMjY2NUM3NS4wNDMyIDkuMTI2NjUgNzQuODE3NyA5LjE3Nzc2IDc0LjYyNDUgOS4yNzk5OUM3NC40MzEzIDkuMzcyOTIgNzQuMjY1NiA5LjQ5ODM4IDc0LjEyNzYgOS42NTYzN0M3My45OTg4IDkuODE0MzYgNzMuODk3NSA5Ljk5NTU4IDczLjgyMzkgMTAuMkM3My43NTAzIDEwLjQwNDUgNzMuNjk5NyAxMC42MTM2IDczLjY3MjEgMTAuODI3M0g3Ni43Nzc3Wk04NC40MzM0IDkuNDM0NzZDODQuMjk1NCA5LjM4ODMgODMuOTIyNyA5LjI5ODU3IDgzLjY3NDMgOS4yNTIxMUM4My40MzE2IDkuMTk2MzUgODMuMDQzOSA5LjE5NjM1IDgyLjcyMTkgOS4xOTYzNUM4Mi41Mzc4IDkuMTk2MzUgODIuMzQgOS4yMTQ5MyA4Mi4xMjg0IDkuMjUyMTFDODEuOTI1OSA5LjI4OTI4IDgxLjc4MzMgOS4zMjE4MSA4MS43MDA1IDkuMzQ5NjlWMTUuMTkwNkg4MC4wMzAzVjguMjQ4NDFDODAuMzUyNCA4LjEyNzYgODAuNzUyNyA4LjAxNjA4IDgxLjIzMTIgNy45MTM4NUM4MS43MTg5IDcuODAyMzMgODIuMjU3MiA3Ljc0NjU3IDgyLjg0NjEgNy43NDY1N0M4Mi45NTY1IDcuNzQ2NTcgODMuMDg1MyA3Ljc1NTg2IDgzLjIzMjYgNy43NzQ0NUM4My4zNzk4IDcuNzgzNzQgODMuNTI3IDcuODAyMzMgODMuNjc0MyA3LjgzMDIxQzgzLjgyMTUgNy44NDg4IDgzLjk2NDEgNy44NzY2OCA4NC4xMDIxIDcuOTEzODVDODQuMjQwMiA3Ljk0MTczIDg0LjM1MDYgNy45Njk2MSA4NC40MzM0IDcuOTk3NDlWOS40MzQ3NloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" data-v-f5c2522d=""><div class="close-popup" data-v-f5c2522d=""><span role="img" aria-label="close" class="anticon anticon-close white-c" data-v-f5c2522d=""><svg focusable="false" class="" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true" viewBox="64 64 896 896"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg></span></div></div><!----><div class="user-info neutral-4-b" data-v-f5c2522d=""><div class="neutral-10-c" data-v-f5c2522d="">Yupeng Zhou</div><div class="user-info-logout neutral-6-c" data-v-f5c2522d="">退出登录</div><div class="current-version" data-v-f5c2522d="">v1.2.5</div></div><!----></main></div></template></div><div class="jvectormap-tip"></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
