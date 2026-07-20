@@ -1,0 +1,41 @@
+.imgctl-container {
+    position: relative;
+}
+
+.imgctl-container .form-group {
+    margin: 0 0 5px;
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    bottom: 0;
+}
+
+.row-group {
+    margin-left: 13px;
+    margin-right: 13px;
+    position: relative;
+}
+
+.imgctl-container.loading {
+    opacity: .5;
+}
+
+.imgctl-container.loading img.loading {
+    display: inline-block!important;
+}
+
+.imgctl-container img.loading {
+    display: none!important;
+}
+
+.imgctl-container img.loading {
+    position: absolute;
+}
+
+.imgctl-container img.frame {
+    display: none!important;
+}
+
+.imgctl-container img.frame.active {
+    display: inline-block!important;
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://shangchenzhou.com/projects/CodeFormer/#citation -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">
+.anticon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
+
+.anticon .anticon-icon {
+  display: block;
+}
+
+.anticon[tabindex] {
+  cursor: pointer;
+}
+
+.anticon-spin::before,
+.anticon-spin {
+  display: inline-block;
+  -webkit-animation: loadingCircle 1s infinite linear;
+  animation: loadingCircle 1s infinite linear;
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>SRFormer</title>
+  
+  <link rel="stylesheet" href="./SRFormer_files/project.css">
+  <link rel="stylesheet" href="./SRFormer_files/bootstrap.min.css">
+  <link rel="stylesheet" href="./SRFormer_files/jquery.imgcmp-1.0.0.css">
+  <link rel="stylesheet" href="./SRFormer_files/jquery.imgctl-1.0.0.css">
+  <script type="text/javascript" src="./SRFormer_files/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./SRFormer_files/jquery-1.12.4.min.js"></script></head>
+<body data-new-gr-c-s-check-loaded="14.1185.0" data-gr-ext-installed="" class="vsc-initialized" data-new-gr-c-s-loaded="14.1185.0">
+  <div id="content">
+    <div class="head">
+      <h1>   
+        <font color="Tomato">SRFormerV2</font>: Taking a Closer Look at Permuted
+        Self-Attention for Image Super-Resolution
+      </h1>
+      <!--=================Authors==========================-->
+      <div class="authors">
+        Yupeng Zhou</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Zhen Li</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Chun-Le Guo</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Li Liu</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Ming-Ming Cheng</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Qibin Hou</a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+
+    <!--=================Tabs==========================-->
+      <ul id="tabs">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#citation">Citation</a></li>
+    </ul>
+    </div> <!-- .head -->
+
+    <!--=================teaser==========================-->
+    <div class="section-teaser">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="imgcmp-wrapper imgcmp-horizontal">
+                <div class="imgcmp-container" style="height: 512px;">
+                    <img src="./SRFormer_files/16_ori.png" class="imgcmp-before">
+                    <img src="./SRFormer_files/16_SRFormer.png" class="imgcmp-after">
+                    <div class="imgcmp-overlay">
+                        <div class="imgcmp-label-before" data-content="Real Input"></div>
+                        <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                    </div>
+                    <div class="imgcmp-handle" style="left: 50%;">
+                        <span class="imgcmp-left-arrow"></span>
+                        <span class="imgcmp-right-arrow"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <div class="col-md-6">
+              <div class="imgcmp-wrapper imgcmp-horizontal">
+                  <div class="imgcmp-container" style="height: 512px;">
+                      <img src="./SRFormer_files/4_ori.png" class="imgcmp-before">
+                      <img src="./SRFormer_files/4_SRFormer.png" class="imgcmp-after">
+                      <div class="imgcmp-overlay">
+                          <div class="imgcmp-label-before" data-content="Real Input"></div>
+                          <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                      </div>
+                      <div class="imgcmp-handle" style="left: 50%;">
+                          <span class="imgcmp-left-arrow"></span>
+                          <span class="imgcmp-right-arrow"></span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" >
+              <div class="imgcmp-wrapper imgcmp-horizontal">
+                  <div class="imgcmp-container">
+                      <img  src="./SRFormer_files/5_ori.png" class="imgcmp-before">
+                      <img src="./SRFormer_files/5_SRFormer.png" class="imgcmp-after">
+                      <div class="imgcmp-overlay">
+                          <div class="imgcmp-label-before" data-content="Real Input"></div>
+                          <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                      </div>
+                      <div class="imgcmp-handle" style="left: 50%;">
+                          <span class="imgcmp-left-arrow"></span>
+                          <span class="imgcmp-right-arrow"></span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="imgcmp-wrapper imgcmp-horizontal">
+                  <div class="imgcmp-container" style="height: 512px;">
+                      <img src="./SRFormer_files/6_ori.png" class="imgcmp-before">
+                      <img src="./SRFormer_files/6_SRFormer.png" class="imgcmp-after">
+                      <div class="imgcmp-overlay">
+                          <div class="imgcmp-label-before" data-content="Real Input"></div>
+                          <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                      </div>
+                      <div class="imgcmp-handle" style="left: 50%;">
+                          <span class="imgcmp-left-arrow"></span>
+                          <span class="imgcmp-right-arrow"></span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="imgcmp-wrapper imgcmp-horizontal">
+                <div class="imgcmp-container" style="height: 512px;">
+                    <img src="./SRFormer_files/19_ori.png" class="imgcmp-before">
+                    <img src="./SRFormer_files/19_SRFormer.png" class="imgcmp-after">
+                    <div class="imgcmp-overlay">
+                        <div class="imgcmp-label-before" data-content="Real Input"></div>
+                        <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                    </div>
+                    <div class="imgcmp-handle" style="left: 50%;">
+                        <span class="imgcmp-left-arrow"></span>
+                        <span class="imgcmp-right-arrow"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-6" >
+                <div class="imgcmp-wrapper imgcmp-horizontal">
+                    <div class="imgcmp-container">
+                        <img  src="./SRFormer_files/1_ori.png" class="imgcmp-before">
+                        <img src="./SRFormer_files/1_SRFormer.png" class="imgcmp-after">
+                        <div class="imgcmp-overlay">
+                            <div class="imgcmp-label-before" data-content="Real Input"></div>
+                            <div class="imgcmp-label-after" data-content="SRFormer"></div>
+                        </div>
+                        <div class="imgcmp-handle" style="left: 50%;">
+                            <span class="imgcmp-left-arrow"></span>
+                            <span class="imgcmp-right-arrow"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+  </div>
+  
+  
+
+    <!--=================Materials==========================-->
+    <div class="section">
+      <h2>Materials</h2>
+      <div class="row text-center">
+        <div class="col-md-2">
+          <a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Zhou_SRFormer_Permuted_Self-Attention_for_Single_Image_Super-Resolution_ICCV_2023_paper.pdf" >
+            Paper (ICCV)
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://github.com/HVision-NKU/SRFormer" target="_blank">
+            Codes (GitHub)
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://drive.google.com/drive/folders/1D5ER_HwYJoyZCcrKVstwE-iEl0hXulwd?usp=sharing" target="_blank">
+            Pretrained Model
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href="https://drive.google.com/drive/folders/1t_yvM5jRJn-YTz-po5tGj3xITItLbeCl?usp=sharing" target="_blank">
+            Visual Results
+          </a>
+        </div>
+      </div>
+    </div> <!-- .section -->
+
+    <!--=================Abstract==========================-->
+    <div id="abstract" class="section">
+      <h2>Abstract</h2>
+      <br>
+      <h4>Abstract—Previous works have shown that increasing the window size for Transformer-based image super-resolution models (e.g.,
+        SwinIR) can significantly improve the model performance. Still, the computation overhead is also considerable when the window size
+        gradually increases. In this paper, we present SRFormer, a simple but novel method that can enjoy the benefit of large window
+        self-attention but introduces even less computational burden. The core of our SRFormer is the permuted self-attention (PSA), which
+        strikes an appropriate balance between the channel and spatial information for self-attention. Without any bells and whistles, we show that our SRFormer achieves a 33.86dB PSNR score on the Urban100 dataset, which is 0.46dB higher than that of SwinIR but uses
+        fewer parameters and computations. In addition, we also attempt to scale up the model by further enlarging the window size and
+        channel numbers to explore the potential of Transformer-based models. Experiments show that our scaled model, named
+        SRFormerV2, can further improve the results and achieves state-of-the-art. We hope our simple and effective approach could be useful
+        for future research in super-resolution model design. </h4>         
+    </div> <!-- .section -->
+    <div class="section">
+      <img src="./SRFormer_files/teaser.png"  width = "44%"  align="right" hspace="15" vspace="15" > 
+      <img src="./SRFormer_files/teaser2.png"  width = "40%"  align="left" hspace="15" vspace="15" > 
+      <div style="clear: both;"></div>
+    </div>
+    <!--=================Method==========================-->
+    <div id="method" class="section">
+      <h2>Method</h2>
+      <br>
+       <img src="./SRFormer_files/psa.png"  width = "99%" > 
+      <p> 
+      </p>
+     
+  
+    </div> <!-- .section -->
+    
+    <!--=================Results==========================-->
+    <div id="results" class="section">
+      <h2>Results</h2>
+      
+      <p>We provide the results on classical image SR, lightweight image SR, realworld image SR. More results can be found in the <a href="#">paper</a>. The visual results of SRFormer can be found in <a href="https://drive.google.com/drive/folders/1t_yvM5jRJn-YTz-po5tGj3xITItLbeCl?usp=sharing" target="_blank">[Visual Results]</a>.</p>
+    
+      <h3>Classical image SR</h3>
+      
+      <p align="center">
+        <img width="900" src="./SRFormer_files/classicalSR_1.png" alt="Classical SR Table 4 Results">
+      </p>
+    
+      <p align="center">
+        <img width="900" src="./SRFormer_files/classicalSR_2.png" alt="Classical SR Figure 4 Results">
+      </p>
+    
+      <h3>Model size comparison</h3>
+      
+      <p align="center">
+        <img width="500" src="./SRFormer_files/model_size.png" alt="Model Size Comparison">
+      </p>
+    
+      <h3>Realworld image SR</h3>
+      
+      <p align="center">
+        <img width="900" src="./SRFormer_files/realworld.png" alt="Realworld SR Figure 8 Results">
+      </p>
+    </div> <!-- .section -->
+     
+
+    
+<div id="citation" class="section">
+  <h2>Citation</h2>
+  <pre>
+    @inproceedings{zhou2023srformer,
+      title={Srformer: Permuted self-attention for single image super-resolution},
+      author={Zhou, Yupeng and Li, Zhen and Guo, Chun-Le and Bai, Song and Cheng, Ming-Ming and Hou, Qibin},
+      booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+      pages={12780--12791},
+      year={2023}
+    }
+  </pre>
+</div> <!-- .section -->
+<div id="citation" class="section">
+ The website is borrowed from <a href="https://shangchenzhou.com/projects/CodeFormer/">Codeformer </a>.
+</div> <!-- .section -->
+
+    <style>
+      a#clustrmaps-widget-v2, #clustrmaps-widget-v2 {
+        min-height: 100px !important;
+      }
+    </style>
+
+
+  </div> <!-- #content -->
+  <script type="text/javascript" src="./SRFormer_files/jquery.event.move-2.0.0.min.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/jquery.imgcmp-1.0.0.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/jquery.imgctl-1.0.0.js"></script>
+  <script type="text/javascript" src="./SRFormer_files/canvas-nest-1.0.1.min.js"></script><canvas id="c_n7" width="1728" height="959" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"></canvas>
+  <script type="text/javascript">
+    window.onload = function() {
+      $(".imgcmp-container").imgcmp({
+        default_offset_pct: 0.5,
+        before_label: 'Real Input',
+        after_label: 'SRFormerV2'
+      });
+      $(".imgctl-container").imgctl({
+          "min": 0,
+          "max": 59,
+          "step": 1,
+          "val": 0,
+          "loadingTop": "35%",
+          "loadingLeft": "35%",
+      });
+    }
+  </script>
+</html>
